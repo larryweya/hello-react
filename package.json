@@ -1,0 +1,24 @@
+{
+  "name": "hello-react",
+  "version": "0.1.0",
+  "description": "React Hello World",
+  "main": "lib/app.js",
+  "scripts": {
+    "bundle": "browserify -r react -r backbone -r ./src/app.js:TableView > lib/bundle.js",
+    "start": "jsxc --watch src/ lib/",
+    "build": "jsxc src/ lib/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Larry Weya",
+  "license": "ISC",
+  "dependencies": {
+    "backbone": "^1.1.2",
+    "flux": "^2.0.1",
+    "object-assign": "^2.0.0",
+    "react": "^0.12.2"
+  },
+  "devDependencies": {
+    "jsxc": "^0.10.0",
+    "reactify": "^0.17.1"
+  }
+}
