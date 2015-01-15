@@ -28,12 +28,6 @@ var TableHeader = React.createClass({displayName: "TableHeader",
 	render: function() {
 		return React.createElement("thead", null, 
 			React.createElement('tr', null, 
-				React.createElement('th', {"colSpan": this.props.headers.length}, 
-					React.createElement('a', {'className': 'breadcrumb-nav', 'href': '#', 'onClick': this.onNavigate}, "Prev"),
-					React.createElement('a', {'className': 'breadcrumb-nav', 'href': '#', 'onClick': this.onNavigate}, "Next")
-				)
-			),
-			React.createElement('tr', null, 
 				this.props.headers.map(function (header, index) {
 					return React.createElement('th', {key: index}, header.get('name'))
 				})
@@ -72,7 +66,7 @@ var TableView = React.createClass({displayName: "TableView",
   	},
 
   	render: function() {
-    	return React.createElement("table", {className: "table table-bordered"},
+    	return React.createElement("table", {className: this.props.className},
     		React.createElement(TableHeader, {headers: this.props.headers}),
     		React.createElement(TableBody, {headers: this.props.headers, records: this.props.records})
     	);
