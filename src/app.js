@@ -24,37 +24,8 @@ var Actions = {
 
 };
 
-var RecordStore = Collection.extend({
-
-	initialize: function () {
-		var _this = this;
-
-		this.dispatcherIndex = AppDispatcher.register(function(payload) {
-			switch(payload.actionType) {
-				case Constants.NAVIGATE:
-					_this.navigate(payload.page);
-					_this.trigger('reset');
-					break;
-				// add more cases for other actionTypes, like UPDATE, etc.
-			}
-
-			return true; // No errors. Needed by promise in Dispatcher.
-		})
-	},
-
-	parse: function (response) {
-		return response.results;
-	},
-
-	navigate: function (page) {
-		console.log("Navigating to page " + page  + " ...");
-	},
-
-});
-
 var TableHeader = React.createClass({displayName: "TableHeader",
 	onNavigate: function(evt) {
-		console.log(arguments);
 		Actions.navigate(2);
 	},
 
