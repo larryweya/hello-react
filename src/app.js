@@ -1,10 +1,6 @@
 /** @jsx React.DOM */
 var assign = require('object-assign');
 var React = require('react');
-var Dispatcher = require('flux').Dispatcher;
-var Collection = require('backbone').Collection;
-
-var AppDispatcher = new Dispatcher();
 
 var Constants = {
 	NAVIGATE: 'refresh'
@@ -32,14 +28,15 @@ var TableHeader = React.createClass({displayName: "TableHeader",
 	render: function() {
 		return React.createElement("thead", null, 
 			React.createElement('tr', null, 
-				React.createElement('th', {"colSpan": 2}, 
+				React.createElement('th', {"colSpan": this.props.headers.length}, 
 					React.createElement('a', {'className': 'breadcrumb-nav', 'href': '#', 'onClick': this.onNavigate}, "Prev"),
 					React.createElement('a', {'className': 'breadcrumb-nav', 'href': '#', 'onClick': this.onNavigate}, "Next")
 				)
 			),
 			React.createElement('tr', null, 
-				React.createElement('th', null, "Name"),
-				React.createElement('th', null, "Age")
+				this.props.headers.map(function (header, index) {
+					return React.createElement('th', {key: index}, header.get('name'))
+				})
 			)
 		);
 	}
