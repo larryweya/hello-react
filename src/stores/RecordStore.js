@@ -1,5 +1,6 @@
 var AppDispatcher = require('../dispatchers/AppDispatcher');
 var Collection = require('backbone').Collection;
+var Constants = require('../constants');
 
 var RecordStore = Collection.extend({
 

@@ -1,24 +1,8 @@
 /** @jsx React.DOM */
 var assign = require('object-assign');
 var React = require('react');
-
-var Constants = {
-	NAVIGATE: 'refresh'
-};
-
-var Actions = {
-
-	/**
-	 * @param  {integer} page
-	 */
-	navigate: function(page) {
-		AppDispatcher.dispatch({
-			actionType: Constants.NAVIGATE,
-			page: page
-		});
-	},
-
-};
+var Constants = require('./constants');
+var Actions = require('./actions');
 
 var TableHeader = React.createClass({displayName: "TableHeader",
 	onNavigate: function(evt) {
@@ -29,7 +13,15 @@ var TableHeader = React.createClass({displayName: "TableHeader",
 		return React.createElement("thead", null, 
 			React.createElement('tr', null, 
 				this.props.headers.map(function (header, index) {
-					return React.createElement('th', {key: index}, header.get('name'))
+					return React.createElement('th', {key: 'title-column-' + index}, header.get('name'))
+				})
+			),
+			React.createElement('tr', null, 
+				this.props.headers.map(function (header, index) {
+					var element = header.get('searchable')?'':'';
+					return React.createElement('td', {key: 'search-column-' + index},
+						React.createElement('input', {key: 'search-input-' + index, type: 'text', name: header.get('id')})
+					)
 				})
 			)
 		);
@@ -52,7 +44,10 @@ var TableBody = React.createClass({displayName: "TableBody",
 
 var TableView = React.createClass({displayName: "TableView",
 	getInitialState: function() {
-		return {headers: this.props.headers.models, records: this.props.records.models};
+		return {
+			headers: this.props.headers.models,
+			records: this.props.records.models
+		};
 	},
   
   	componentDidMount: function() {
@@ -65,11 +60,26 @@ var TableView = React.createClass({displayName: "TableView",
     	this.props.records.off(null, null, this);
   	},
 
+  	handleSubmit: function (e) {
+  		e.preventDefault();
+  		// jQuery dependency
+  		var searchTerms = $(this.getDOMNode()).serializeArray().reduce(function (carry, field) {
+  			// only add fields that have values
+  			if(!!field.value.trim())
+  				carry[field.name] = field.value;
+  			return carry;
+  		}, {});
+  		Actions.search(searchTerms);
+  	},
+
   	render: function() {
-    	return React.createElement("table", {className: this.props.className},
-    		React.createElement(TableHeader, {headers: this.props.headers}),
-    		React.createElement(TableBody, {headers: this.props.headers, records: this.props.records})
-    	);
+  		return React.createElement('form', {onSubmit: this.handleSubmit},
+  			React.createElement("button", {style: {position: 'absolute', left: '-9999px', width: '1px', height: '1px'}}, 'Search'),
+  			React.createElement("table", {className: this.props.className},
+	    		React.createElement(TableHeader, {headers: this.props.headers}),
+	    		React.createElement(TableBody, {headers: this.props.headers, records: this.props.records})
+	    	)
+  		);
   	}
 });
 
