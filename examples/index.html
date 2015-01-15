@@ -18,27 +18,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                        </div>
+                        <div class="col-md-6">
+                            <nav id="table-pagination" class="pull-right"></nav>
+                        </div>
+                    </div>
                     <div id="data-grid" class="table-responsive">
-                        <nav id="table-pagination">
-                          <ul class="pagination">
-                            <li>
-                              <a href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                              </a>
-                            </li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li>
-                              <a href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                              </a>
-                            </li>
-                          </ul>
-                        </nav>
-                        <div id="table-view"></div>
                     </div>
                 </div>
             </div>
@@ -50,18 +37,18 @@
             var React = require('react');
             var Backbone = require('backbone');
             var ReactTable = require('react-table');
-            
+
             // backbone on Node.js doenst attach jQuery so we cant run ajax calls - attach it here
             Backbone.$ = jQuery;
             var headers = new Backbone.Collection([{id: 'name', name: "Name"}, {id: 'age', name: "Age"}]);
-            var records = new ReactTable.RecordStore([], {url: '/books.json'});
+            var records = new ReactTable.RecordStore([], {url: 'books.json'});
             React.render(
                 React.createElement(ReactTable.PagerView, {className: 'pagination', records: records}),
                 document.getElementById('table-pagination')
             );
             React.render(
-                React.createElement(ReactTable.TableView, {headers: headers, records: records}),
-                document.getElementById('table-view')
+                React.createElement(ReactTable.TableView, {headers: headers, records: records, className: 'table'}),
+                document.getElementById('data-grid')
             );
             // must set reset to true because we use the reset events to update our view
             records.fetch({reset: true});
