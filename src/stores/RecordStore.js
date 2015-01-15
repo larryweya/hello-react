@@ -12,11 +12,12 @@ var RecordStore = Collection.extend({
 
 		this.dispatcherIndex = AppDispatcher.register(function(payload) {
 			switch(payload.actionType) {
+				case Constants.SEARCH:
+					_this.search(payload.terms);
+					break;
 				case Constants.NAVIGATE:
 					_this.navigate(payload.page);
-					_this.trigger('reset');
 					break;
-				// add more cases for other actionTypes, like UPDATE, etc.
 			}
 
 			return true; // No errors. Needed by promise in Dispatcher.
@@ -24,7 +25,12 @@ var RecordStore = Collection.extend({
 	},
 
 	parse: function (response) {
-		return response.records;
+		return response.results;
+	},
+
+	search: function (terms) {
+		// compose the query
+		this.fetch({reset: true, data: terms});
 	},
 
 	navigate: function (page) {

@@ -1,1 +1,1 @@
-{"count": 20, "records":[{"id": 1, "name": "John", "age": 32}, {"id": 3, "name": "Jane", "age": 23}]}
+{"total": 23, "count": 2,"results":[{"id": 1, "name": "John", "age": 32}, {"id": 3, "name": "Jane", "age": 23}]}

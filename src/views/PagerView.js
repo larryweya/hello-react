@@ -21,8 +21,8 @@ var PagerView = React.createClass({displayName: "PagerView",
       var isFirstPage = this.state.currentPage == 1;
       var isLastPage = this.state.currentPage == numPages;
       var pages = [
-        React.createElement('li', {className: isFirstPage?'disabled':''}, React.createElement('a', {href: '#'}, '<<')),
-        React.createElement('li', {className: isFirstPage?'disabled':''}, React.createElement('a', {href: '#'}, '<'))
+        React.createElement('li', {key: 'nav-first', className: isFirstPage?'disabled':''}, React.createElement('a', {href: '#'}, '<<')),
+        React.createElement('li', {key: 'nav-prev', className: isFirstPage?'disabled':''}, React.createElement('a', {href: '#'}, '<'))
       ];
       for(i = 0; i < numPages; i++)
       {
@@ -34,8 +34,8 @@ var PagerView = React.createClass({displayName: "PagerView",
         );
       }
       pages.push(
-        React.createElement('li', {className: isLastPage?'disabled':''}, React.createElement('a', {href: '#'}, '>')),
-        React.createElement('li', {className: isLastPage?'disabled':''}, React.createElement('a', {href: '#'}, '>>'))
+        React.createElement('li', {key: 'nav-next', className: isLastPage?'disabled':''}, React.createElement('a', {href: '#'}, '>')),
+        React.createElement('li', {key: 'nav-last', className: isLastPage?'disabled':''}, React.createElement('a', {href: '#'}, '>>'))
       );
     	return React.createElement('ul', {className: this.props.className}, pages);
   	}
