@@ -40,7 +40,7 @@
 
             // backbone on Node.js doenst attach jQuery so we cant run ajax calls - attach it here
             Backbone.$ = jQuery;
-            var headers = new Backbone.Collection([{id: 'name', name: "Name"}, {id: 'age', name: "Age"}]);
+            var headers = new Backbone.Collection([{key: 'name', label: "Name"}, {key: 'age', label: "Age"}]);
             var records = new ReactTable.RecordStore([], {url: 'books.json'});
             React.render(
                 React.createElement(ReactTable.PagerView, {className: 'pagination', records: records}),
